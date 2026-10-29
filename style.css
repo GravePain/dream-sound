@@ -1,0 +1,83 @@
+/* UI chrome comes from the shared theme (/common/ui/theme.css, linked first); the accent is set there
+   per <html data-app>. Same names and panel as Dream Effects. */
+:root {
+  --bg: var(--ui-bg);
+  --panel: var(--ui-panel);
+  --ink: var(--ui-text);
+  --dim: var(--ui-dim);
+  --field: var(--ui-field);
+  --line: var(--ui-line);
+}
+html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); font-family: system-ui, sans-serif; color: var(--ink); }
+[hidden] { display: none !important; }
+
+#panel {
+  position: fixed; left: 12px; top: 12px; bottom: 12px; width: 300px; overflow-y: auto; z-index: 2;
+  background: var(--panel); border-radius: 10px; padding: 12px 14px; font-size: 13px; box-sizing: border-box;
+  border: 1px solid var(--ui-line); box-shadow: var(--ui-shadow);
+}
+.portal-link { display: inline-block; color: var(--dim); font-size: 12px; text-decoration: none; margin-bottom: 4px; }
+.portal-link:hover { color: var(--accent); }
+.brand { font-size: 15px; margin-bottom: 8px; }
+.brand b { color: var(--accent); }
+.brand span { color: var(--dim); font-size: 12px; }
+section { border-top: 1px solid var(--line); padding: 10px 0 4px; }
+.sub { color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; margin: 10px 0 4px; }
+
+.row { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.row > input[type=range] { flex: 1; min-width: 0; accent-color: var(--accent); }
+.row output { width: 52px; text-align: right; color: var(--dim); font-variant-numeric: tabular-nums; }
+.row .lbl { width: 86px; flex: none; }
+select, input[type=number], input[type=text] {
+  flex: 1; min-width: 0; background: var(--field); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; font: inherit;
+}
+select option { background: var(--ui-panel); }
+.seed input { width: 70px; flex: 1; }
+button {
+  background: var(--field); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; font: inherit; cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button.on, button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.buttons { flex-wrap: wrap; }
+.buttons button { flex: 1; }
+.mode button { flex: 1; padding: 5px 4px; }
+.tabs button { font-size: 12px; }
+.toggle input { accent-color: var(--accent); }
+.hint { color: var(--dim); font-size: 12px; line-height: 1.45; margin: 6px 0; }
+.opened:empty { display: none; }
+.opened { background: var(--field); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; }
+.opened b { color: var(--accent); }
+.lib-only { display: none; }
+body.dl-online .lib-only { display: revert; }
+
+/* slice list and filter chain */
+.list .item, #chain .fx { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border: 1px solid var(--line); border-radius: 6px; margin: 4px 0; background: var(--field); }
+.list .item.sel { border-color: var(--accent); }
+.list .item input[type=text] { flex: 1; }
+.list .item .len { color: var(--dim); font-size: 11px; width: 44px; text-align: right; }
+.list .item button, #chain .fx button { padding: 2px 6px; }
+#chain .fx { flex-direction: column; align-items: stretch; }
+#chain .fx .head { display: flex; gap: 6px; align-items: center; }
+#chain .fx .head b { flex: 1; }
+#chain .fx .row { margin: 3px 0; }
+#chain .fx .lbl { width: 70px; }
+
+/* the stage, right of the panel */
+#stage { position: fixed; left: 324px; right: 12px; top: 12px; bottom: 12px; }
+#wave { width: 100%; height: 100%; display: block; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); cursor: crosshair; }
+#keys { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.keyboard { position: relative; height: 200px; display: flex; user-select: none; }
+.keyboard .k { width: 46px; height: 200px; background: #e8e6e1; border: 1px solid #222; border-radius: 0 0 6px 6px; box-sizing: border-box; color: #555; font-size: 11px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; cursor: pointer; }
+.keyboard .k.black { position: absolute; width: 30px; height: 124px; background: #1a1a1a; color: #aaa; z-index: 1; margin-left: -15px; }
+.keyboard .k.down { background: var(--accent); color: var(--accent-ink); }
+#grid { position: absolute; inset: 0; overflow: auto; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); padding: 10px; box-sizing: border-box; }
+.grid { display: grid; gap: 2px; user-select: none; }
+.grid .name { font-size: 12px; color: var(--ink); display: flex; align-items: center; gap: 4px; padding-right: 6px; white-space: nowrap; overflow: hidden; }
+.grid .name button { padding: 0 5px; font-size: 11px; }
+.grid .name input { width: 44px; flex: none; padding: 1px 3px; }
+.grid .cell { height: 22px; background: var(--field); border-radius: 3px; cursor: pointer; }
+.grid .cell.beat { background: color-mix(in srgb, var(--field) 70%, var(--ink) 8%); }
+.grid .cell.on { background: var(--accent); }
+.grid .cell.held { background: var(--accent-2); }
+.grid .cell.now { outline: 1px solid var(--ink); }
+.grid .empty { color: var(--dim); font-size: 13px; }
