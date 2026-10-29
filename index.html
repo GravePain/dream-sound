@@ -62,16 +62,21 @@
     <div class="row buttons"><button id="cl-save" class="primary lib-only">Render and save clip</button><button id="cl-save-as" class="lib-only">Save as…</button></div>
     <p class="hint">Click a cell for a hit, drag right from it to hold a synth note longer, right-click to clear. A clip saves its pattern (.clip.json) and its render (.clip.json.wav) together.</p>
 </div>
+<div class="pane fill" id="w-wave" data-title="Wave"><canvas id="wave"></canvas></div>
+<div class="pane fill" id="w-keys" data-title="Keyboard"><div id="keys"></div></div>
+<div class="pane fill" id="w-grid" data-title="Clip grid"><div id="grid"></div></div>
 </div>
 
-<main id="stage">
-  <canvas id="wave" ></canvas>
-  <div id="keys" ></div>
-  <div id="grid" ></div>
-</main>
 <script type="module">
+// the windows were rearranged around the workflow: forget the old places once
+try {
+  if (localStorage.getItem('dream-ui:sound:layout') !== '3') {
+    for (const k of Object.keys(localStorage)) if (k.startsWith('dream-ui:sound:win:')) localStorage.removeItem(k);
+    localStorage.setItem('dream-ui:sound:layout', '3');
+  }
+} catch { /* storage off: nothing remembered anyway */ }
 const { mountPanes } = await import(`${location.origin}/common/ui/panes.js`);
-mountPanes({ app: 'Dream Sound', layout: { 'w-slicer': [12, 44, 300, 480], 'w-filters': [320, 44, 300, 420], 'w-synth': [628, 44, 300, 520], 'w-dice': [936, 44, 290, 400], 'w-clip': [-12, 44, 300, 470] } });
+mountPanes({ app: 'Dream Sound', layout: { 'w-wave': [12, 44, 700, 290], 'w-slicer': [12, 342, 300, 480], 'w-filters': [320, 342, 270, 380], 'w-synth': [720, 44, 290, 520], 'w-keys': [600, 572, 720, 260], 'w-dice': [1018, 44, 280, 380], 'w-clip': [1306, 44, 290, 440], 'w-grid': [1328, 492, 560, 330] } });
 </script>
 <script type="module" src="main.js"></script>
 </body>

@@ -52,15 +52,16 @@ body.dl-online .lib-only { display: revert; }
 #chain .fx .row { margin: 3px 0; }
 #chain .fx .lbl { width: 70px; }
 
-/* the stage: the wave, the clip grid and the keys, one above the other, using the whole screen; the windows float over it */
-#stage { position: fixed; left: 12px; right: 12px; top: 40px; bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
-#wave { flex: 1 1 40%; min-height: 0; width: 100%; display: block; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); cursor: crosshair; }
-#keys { flex: none; height: 220px; display: flex; align-items: center; justify-content: center; }
+/* the stage is windows now: the wave, the keyboard and the clip grid fill theirs */
+.pane.fill { height: 100%; display: flex; }
+.pane.fill > * { flex: 1; min-width: 0; min-height: 0; }
+#wave { width: 100%; display: block; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); cursor: crosshair; }
+#keys { display: flex; align-items: center; justify-content: center; }
 .keyboard { position: relative; height: 200px; display: flex; user-select: none; }
 .keyboard .k { width: 46px; height: 200px; background: #e8e6e1; border: 1px solid #222; border-radius: 0 0 6px 6px; box-sizing: border-box; color: #555; font-size: 11px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; cursor: pointer; }
 .keyboard .k.black { position: absolute; width: 30px; height: 124px; background: #1a1a1a; color: #aaa; z-index: 1; margin-left: -15px; }
 .keyboard .k.down { background: var(--accent); color: var(--accent-ink); }
-#grid { flex: 1 1 35%; min-height: 0; overflow: auto; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); padding: 10px; box-sizing: border-box; }
+#grid { overflow: auto; background: var(--ui-panel); border-radius: 10px; border: 1px solid var(--ui-line); padding: 10px; box-sizing: border-box; }
 .grid { display: grid; gap: 2px; user-select: none; }
 .grid .name { font-size: 12px; color: var(--ink); display: flex; align-items: center; gap: 4px; padding-right: 6px; white-space: nowrap; overflow: hidden; }
 .grid .name button { padding: 0 5px; font-size: 11px; }
