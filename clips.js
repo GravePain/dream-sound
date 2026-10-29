@@ -24,7 +24,7 @@ export function init(a) {
   $('cl-save').onclick = () => save(false);
   $('cl-save-as').onclick = () => save(true);
   addEventListener('pointerup', () => { paint = null; });
-  app.on('tab', (t) => { if (t === 'clip') { fields(); grid(); } else if (t !== 'dice') stop(); });
+  app.on('tab', (t) => { if (t === 'clip') { fields(); grid(); } });
   app.clips = { setClip, grid: drawGrid, get clip() { return clip; } };
   fields();
 }

@@ -8,16 +8,9 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="dream-ui">
-<div id="panel">
-  <a class="portal-link" id="portal-link" href="/">← Portal</a>
-  <div class="brand"><b>Dream Sound</b> <span>· slice, filter, synth, clips</span></div>
-  <div class="row mode tabs" id="tabs">
-    <button data-tab="slicer" class="on">Slicer</button><button data-tab="filters">Filters</button><button data-tab="synth">Synth</button><button data-tab="dice">Dice</button><button data-tab="clip">Clip</button>
-  </div>
-
-  <!-- slicer -->
-  <section data-pane="slicer">
-    <div id="sound-name" class="opened"></div>
+<div id="wins" hidden>
+<div class="pane" id="w-slicer" data-title="Slicer">
+<div id="sound-name" class="opened"></div>
     <p class="hint" id="slicer-hint">Open a sound from the library (Library, bottom right). Click the wave to add a cut, drag a cut to move it, right-click a cut to remove it.</p>
     <div class="row"><span class="lbl">Silence under</span><input id="sl-thresh" type="range" min="-70" max="-10" value="-40"><output id="sl-thresh-o">-40 dB</output></div>
     <div class="row buttons small"><button id="sl-auto" title="Cut where the sound goes quiet">Auto-cut on silence</button><button id="sl-clear">Clear cuts</button></div>
@@ -26,11 +19,9 @@
     <div class="sub">Slices</div>
     <div id="slices" class="list"></div>
     <div class="row buttons"><button id="sl-save" class="primary lib-only">Save ticked slices</button></div>
-  </section>
-
-  <!-- filters -->
-  <section data-pane="filters" hidden>
-    <div id="fx-target" class="opened"></div>
+</div>
+<div class="pane" id="w-filters" data-title="Filters">
+<div id="fx-target" class="opened"></div>
     <div class="row"><span class="lbl">Apply to</span><select id="fx-on"><option value="sound">The whole sound</option><option value="slice">The selected slice</option></select></div>
     <div class="sub">Chain (top runs first)</div>
     <div id="chain"></div>
@@ -38,11 +29,9 @@
     <div class="row buttons"><button id="fx-play">▶ Preview</button><button id="fx-stop">■</button></div>
     <div class="row buttons"><button id="fx-save" class="primary lib-only">Render and save</button></div>
     <p class="hint">The preview plays through the same chain the render uses. Saving writes a new sound; the original stays.</p>
-  </section>
-
-  <!-- synth -->
-  <section data-pane="synth" hidden>
-    <div class="row"><span class="lbl">Preset</span><select id="sy-preset"></select></div>
+</div>
+<div class="pane" id="w-synth" data-title="Synth">
+<div class="row"><span class="lbl">Preset</span><select id="sy-preset"></select></div>
     <div id="sy-params"></div>
     <div class="row buttons"><button id="sy-save" class="primary lib-only">Save preset</button><button id="sy-save-as" class="lib-only">Save as…</button></div>
     <div class="sub">Render a note</div>
@@ -50,11 +39,9 @@
     <div class="row"><span class="lbl">Length</span><input id="sy-len" type="range" min="0.05" max="4" step="0.05" value="0.6"><output id="sy-len-o">0.6 s</output></div>
     <div class="row buttons"><button id="sy-render" class="lib-only">Render note to library</button></div>
     <p class="hint">Play from the keys on the page or the computer keyboard: A W S E D F T G Y H U J K (Z / X for octave).</p>
-  </section>
-
-  <!-- dice -->
-  <section data-pane="dice" hidden>
-    <div class="row mode" id="dice-kind"><button data-dice="chords" class="on">Chords</button><button data-dice="melody">Melody</button><button data-dice="riff">Riff</button></div>
+</div>
+<div class="pane" id="w-dice" data-title="Dice">
+<div class="row mode" id="dice-kind"><button data-dice="chords" class="on">Chords</button><button data-dice="melody">Melody</button><button data-dice="riff">Riff</button></div>
     <div class="row"><span class="lbl">Key</span><select id="dc-key"></select><select id="dc-scale"></select></div>
     <div class="row"><span class="lbl">Bars</span><select id="dc-bars"><option>1</option><option selected>2</option><option>4</option></select></div>
     <div class="row"><span class="lbl">Density</span><input id="dc-density" type="range" min="0.1" max="1" step="0.05" value="0.5"><output id="dc-density-o">0.5</output></div>
@@ -63,11 +50,9 @@
     <p class="hint">Plays over the Synth tab's preset. Same seed, same pattern.</p>
     <div class="row buttons"><button id="dc-play">▶ Audition</button><button id="dc-stop">■</button></div>
     <div class="row buttons"><button id="dc-keep" class="primary" title="Open it in the Clip tab to edit and save">Keep (open in Clip)</button></div>
-  </section>
-
-  <!-- clip -->
-  <section data-pane="clip" hidden>
-    <div id="clip-name" class="opened"></div>
+</div>
+<div class="pane" id="w-clip" data-title="Clip">
+<div id="clip-name" class="opened"></div>
     <div class="row"><span class="lbl">Name</span><input id="cl-name" type="text" spellcheck="false" value="Clip"></div>
     <div class="row"><span class="lbl">Tempo</span><input id="cl-tempo" type="number" min="40" max="240" value="110"></div>
     <div class="row"><span class="lbl">Swing</span><input id="cl-swing" type="range" min="0" max="1" step="0.05" value="0"><output id="cl-swing-o">0</output></div>
@@ -76,14 +61,18 @@
     <div class="row buttons"><button id="cl-play">▶ Play</button><button id="cl-loop">⟲ Loop</button><button id="cl-stop">■</button></div>
     <div class="row buttons"><button id="cl-save" class="primary lib-only">Render and save clip</button><button id="cl-save-as" class="lib-only">Save as…</button></div>
     <p class="hint">Click a cell for a hit, drag right from it to hold a synth note longer, right-click to clear. A clip saves its pattern (.clip.json) and its render (.clip.json.wav) together.</p>
-  </section>
+</div>
 </div>
 
 <main id="stage">
-  <canvas id="wave" data-view="slicer filters"></canvas>
-  <div id="keys" data-view="synth" hidden></div>
-  <div id="grid" data-view="dice clip" hidden></div>
+  <canvas id="wave" ></canvas>
+  <div id="keys" ></div>
+  <div id="grid" ></div>
 </main>
+<script type="module">
+const { mountPanes } = await import(`${location.origin}/common/ui/panes.js`);
+mountPanes({ app: 'Dream Sound', layout: { 'w-slicer': [12, 44, 300, 480], 'w-filters': [320, 44, 300, 420], 'w-synth': [628, 44, 300, 520], 'w-dice': [936, 44, 290, 400], 'w-clip': [-12, 44, 300, 470] } });
+</script>
 <script type="module" src="main.js"></script>
 </body>
 </html>

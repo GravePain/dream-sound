@@ -161,7 +161,7 @@ function keyboard() {
 }
 function computerKeys() {
   addEventListener('keydown', (e) => {
-    if (app.tab !== 'synth' || e.repeat || e.ctrlKey || e.metaKey || e.target?.matches?.('input[type=text], input[type=number], select')) return;
+    if (e.repeat || e.ctrlKey || e.metaKey || e.target?.matches?.('input[type=text], input[type=number], select')) return;
     const k = e.key.toLowerCase();
     if (k === 'z' || k === 'x') { octave = Math.max(1, Math.min(7, octave + (k === 'x' ? 1 : -1))); keyboard(); return; }
     const i = KEYS.indexOf(k);

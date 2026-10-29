@@ -25,7 +25,7 @@ export function init(a) {
   $('fx-save').onclick = save;
   $('fx-on').onchange = target;
   app.on('sound', target);
-  app.on('tab', (t) => { if (t === 'filters') target(); else stop(); });
+  app.on('tab', (t) => { if (t === 'filters') target(); });
   app.filters = { get chain() { return chain; }, set chain(c) { chain = c; render(); } };
   render();
 }

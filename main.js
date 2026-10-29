@@ -14,7 +14,6 @@ if (!audio) {
 }
 const wave = await import('./wave.js');
 const { createLibrary, fileUrl } = await import(`${COMMON}/library.js`).catch(() => ({}));
-$('portal-link').href = `${location.protocol}//${location.hostname}:5170/`;
 
 const b64text = (s) => btoa(unescape(encodeURIComponent(s)));
 const folderOf = (p) => p.split('/').slice(0, -1).join('/');
@@ -66,16 +65,16 @@ function download(blob, name) {
 }
 app.download = download;
 
-// ---------- tabs ----------
+// ---------- the active window ----------
+// Every tool is on screen at once, in its own window. `tab` is the one last used: it decides where an opened
+// sound goes (a Clip row, or the Slicer) and tells that tool to refresh.
 function setTab(t) {
+  if (app.tab === t) return;
   app.tab = t;
-  for (const b of document.querySelectorAll('[data-tab]')) b.classList.toggle('on', b.dataset.tab === t);
-  for (const s of document.querySelectorAll('[data-pane]')) s.hidden = s.dataset.pane !== t;
-  for (const v of document.querySelectorAll('[data-view]')) v.hidden = !v.dataset.view.split(' ').includes(t);
   app.emit('tab', t);
 }
 app.setTab = setTab;
-for (const b of document.querySelectorAll('[data-tab]')) b.onclick = () => setTab(b.dataset.tab);
+addEventListener('pointerdown', (e) => { const w = e.target.closest?.('.dw-win'); if (w) setTab(w.dataset.win); }, true);
 
 // ---------- the tabs' modules ----------
 const slicer = await import('./slicer.js');
@@ -111,4 +110,5 @@ for (const [k, fn] of [['sound', (p, path) => app.openSound(p, path)], ['synth',
 }
 
 setTab(q.get('tab') ?? (q.get('synth') ? 'synth' : q.get('clip') ? 'clip' : 'slicer'));
+for (const t of ['slicer', 'filters', 'synth', 'dice', 'clip']) app.emit('tab', t); // each tool draws once; the one asked for is active
 window.dreamSound = app;

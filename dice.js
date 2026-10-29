@@ -30,7 +30,8 @@ export function init(a) {
   $('dc-play').onclick = audition;
   $('dc-stop').onclick = stop;
   $('dc-keep').onclick = keep;
-  app.on('tab', (t) => { if (t === 'dice') { roll(); } else stop(); });
+  let rolled = false; // the first time its window is used; every window is on screen at once now, so nothing stops on a change of focus
+  app.on('tab', (t) => { if (t === 'dice' && !rolled) { rolled = true; roll(); } });
   app.dice = { roll: (o) => generate(o), get def() { return def; } };
 }
 
